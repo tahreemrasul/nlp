@@ -52,7 +52,7 @@ for i in range(len(sentences)):
     review = re.sub('[^a-zA-Z]', ' ', sentences[i])
     review = review.lower()
     review = review.split()
-    review = [stemmer.stem(word) for word in review if word not in set(stopwords.words('english'))]
+    review = [lemmatizer.lemmatize(word) for word in review if word not in set(stopwords.words('english'))]
     sentences[i] = ' '.join(review)
     print(sentences[i])
     corpus.append(review)
@@ -63,4 +63,10 @@ corpus = [item for sublist in corpus for item in sublist]
 from sklearn.feature_extraction.text import CountVectorizer
 cv = CountVectorizer()
 X = cv.fit_transform(corpus).toarray()
-print(X)
+print("\nBag of Words Vector")
+
+## Creating the tf-idf model
+from sklearn.feature_extraction.text import TfidfVectorizer
+cv2 = TfidfVectorizer()
+X2 = cv2.fit_transform(corpus).toarray()
+print("\nTF IDF Vector")
